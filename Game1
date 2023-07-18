@@ -1,0 +1,72 @@
+// Cory Cusick
+
+package Exam;
+import java.util.Scanner;
+
+public class rockpaperscissor {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        	// Ask the user how many games they want to play
+        System.out.print("How many games would you like to play?: ");
+        int games = scanner.nextInt();
+        
+        for (int i = 1; i <= games; i++) {
+            System.out.println("\n" + underline("Game " + i));
+            	// Random number represents the computer's choice
+            int computerChoice = (int) (Math.random() * 3) + 1;
+            String computerChoiceString = getChoiceString(computerChoice);
+            String userChoice;
+            boolean validChoice = false;
+            
+            do {
+                System.out.print("Enter your choice (rock/paper/scissors): ");
+                userChoice = scanner.next().toLowerCase();
+                
+                if (userChoice.equals("rock") || userChoice.equals("paper") || userChoice.equals("scissors")) {
+                    validChoice = true;
+                } else {
+                    System.out.println("Invalid choice. Please enter rock, paper, or scissors.");
+                }
+            } while (!validChoice);
+            
+            System.out.println("The computer chooses...: " + computerChoiceString);
+            String winner = determineWinner(userChoice, computerChoiceString);
+            System.out.println("Winner: " + winner);
+        }
+        
+        scanner.close();
+    }
+    
+    public static String getChoiceString(int choice) {
+        switch (choice) {
+            case 1:
+                return "rock!";
+            case 2:
+                return "paper!";
+            case 3:
+                return "scissors!";
+            default:
+                return "";
+        }
+    }
+    
+    		// Determine who the winner is
+    
+    public static String determineWinner(String userChoice, String computerChoice) {
+        if (userChoice.equals(computerChoice)) {
+            return "It's a tie!";
+        } else if ((userChoice.equals("rock") && computerChoice.equals("scissors"))
+                || (userChoice.equals("scissors") && computerChoice.equals("paper"))
+                || (userChoice.equals("paper") && computerChoice.equals("rock"))) {
+            return "You win!";
+        } else {
+            return "Computer wins!";
+        }
+    }
+    
+    		// Function to underline the text
+    
+    public static String underline(String text) {
+        return "\033[4m" + text + "\033[0m";
+    }
+}
